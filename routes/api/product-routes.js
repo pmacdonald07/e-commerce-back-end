@@ -43,7 +43,12 @@ router.get("/:id", (req, res) => {
         as: "product_tags",
       },
     ],
-  });
+  })
+    .then((dbProductData) => res.json(dbProductData))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
   // be sure to include its associated Category and Tag data
 });
 
@@ -123,7 +128,7 @@ router.put("/:id", (req, res) => {
 
 router.delete("/:id", (req, res) => {
   // delete one product by its `id` value
-  Category.destroy({
+  Product.destroy({
     where: {
       id: req.params.id,
     },
